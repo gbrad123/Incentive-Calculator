@@ -11,7 +11,7 @@ ui <- fluidPage(
     h4("About This Calculator", style = "color: #662260; font-weight: 700; margin-top: 0; margin-bottom: 15px;"),
     p(
       style = "font-size: 15px; line-height: 1.7; color: #2d3748; margin-bottom: 5px;",
-      "This calculator helps you determine how large a pull mechanism needs to be to incentivize a given level of innovation. It calculates the needed size of different mechanisms:",
+      "This calculator helps you apply the pull sizing framework above to determine how large your pull incentive needs to be. It calculates the needed size of different mechanisms, discounted to the present day:",
       tags$ol(
         style = "margin-left: 20px; ",
         tags$li(
@@ -20,22 +20,29 @@ ui <- fluidPage(
         ),
         tags$li(
           tags$strong("Advanced Market Commitments (AMCs):"),
-          " Participants receive a subsidy payment (top-up) per unit of the innovation sold over the product lifecycle"
+          " Participants receive a subsidy payment (top-up) per unit of the innovation sold over the subsidy period"
         ),
         tags$li(
           tags$strong("Milestones + AMCs:"),
           " Firms receive lump-sum payments upon completing specific development stages, followed by per-unit subsidies (top-ups) for commercialization"
         )
       ),
-      "The calculator allows you to model different scenarios including: multiple development stages with varying costs and success probabilities, different adoption and revenue curves, flexible AMC parameters (top-up amounts or target unit coverage), revenue generation timing (which stage revenue begins), and milestone payment schedules."
+      "The calculator allows you to model different scenarios including: multiple development stages with varying costs and success probabilities, different adoption and revenue curves, flexible AMC parameters (top-up amounts or no. of units to cover), revenue generation timing (which stage revenue begins), and milestone payment schedules."
     ),
     tags$a(
-      href = "https://www.marketshapingaccelerator.org/pull-incentive-sizing-tool/",
+      href = "https://cgdev.shinyapps.io/msa-pullsizing-incentive-calc1/",
       target = "_blank",
-      style = "color: #662260; font-weight: 600; text-decoration: none; font-size: 14px;",
-      "Read more about the methodology →"
+      style = "color: #662260; font-weight: 600; text-decoration: none; font-size: 16px;",
+      "View the full size version →"
     ),
-    p(style = "color: #58595B; font-size: 14px; margin-top: 12px; ", "Masterminds: 💅 Georgia with moral support from 👑 Hassan"),
+    tags$div(
+      tags$a(
+        href = "https://docs.google.com/forms/d/1GoN0U9lbSCET4P3WlMjookgf0hGzX6xROYBJv1am1dM/viewform?edit_requested=true",
+        target = "_blank",
+        style = "color: #662260; font-weight: 600; text-decoration: none; font-size: 14px;",
+        "Have feedback on how we can improve?  Provide it here →"
+      )
+    )
   ),
   
   tags$head(tags$style(
@@ -55,6 +62,7 @@ ui <- fluidPage(
     font-family: 'Proxima Nova', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
     background: #662260 !important;
     min-height: 100vh;
+    padding-bottom: 60px;
   }
 
   .container-fluid {
@@ -761,6 +769,37 @@ ui <- fluidPage(
     transform: translateX(8px) !important;
     box-shadow: 0 8px 30px rgba(102, 34, 96, 0.25) !important;
   }
+  
+  /* ========== BOTTOM-RIGHT FIXED FOOTER LINK ========== */
+.bottom-right-footer {
+  position: fixed;
+  right: 18px;
+  bottom: 14px;
+  z-index: 9999;
+
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'Proxima Nova', 'Inter', sans-serif;
+
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+}
+
+.bottom-right-footer a {
+  color: black !important;
+  text-decoration: none !important;
+}
+
+.bottom-right-footer a:hover {
+  text-decoration: underline !important;
+}
+
+@media (max-width: 768px) {
+  .bottom-right-footer { display: none; }
+}
+
 
 "
     )
@@ -921,7 +960,7 @@ ui <- fluidPage(
           6,
           numericInput(
             "discount_rate",
-            "Discount Rate (%):",
+            "Firm Discount Rate (%):",
             value = 9,
             min = 0,
             max = 100,
@@ -1250,6 +1289,15 @@ ui <- fluidPage(
         br(),
         uiOutput("plot_section")
       )
-    )
+    ),
+    
+    
+  ),
+  
+  tags$div(
+    class = "bottom-right-footer",
+    style = "color: black",
+    HTML('Author: Georgia Bradley (2025). <a href="https://github.com/gbrad123/Incentive-Calculator" target="_blank">Link to Git repository here</a>')
   )
+  
 )
