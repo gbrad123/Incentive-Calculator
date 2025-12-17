@@ -7,40 +7,47 @@ ui <- fluidPage(
   
   # Introduction section
   div(
-    style = "background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); padding: 25px 30px; border-radius: 16px; margin: 0 0 30px 0; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);",
-    h4("About This Calculator", style = "color: #662260; font-weight: 700; margin-top: 0; margin-bottom: 15px;"),
-    p(
-      style = "font-size: 15px; line-height: 1.7; color: #2d3748; margin-bottom: 5px;",
-      "This calculator helps you apply the pull sizing framework above to determine how large your pull incentive needs to be. It calculates the needed size of different mechanisms, discounted to the present day:",
-      tags$ol(
-        style = "margin-left: 20px; ",
-        tags$li(
-          tags$strong("Prizes:"),
-          " Successful participants split a prize upon completion of all development stages"
-        ),
-        tags$li(
-          tags$strong("Advanced Market Commitments (AMCs):"),
-          " Participants receive a subsidy payment (top-up) per unit of the innovation sold over the subsidy period"
-        ),
-        tags$li(
-          tags$strong("Milestones + AMCs:"),
-          " Firms receive lump-sum payments upon completing specific development stages, followed by per-unit subsidies (top-ups) for commercialization"
-        )
-      ),
-      "The calculator allows you to model different scenarios including: multiple development stages with varying costs and success probabilities, different adoption and revenue curves, flexible AMC parameters (top-up amounts or no. of units to cover), revenue generation timing (which stage revenue begins), and milestone payment schedules."
-    ),
+    style = "margin: 0 0 30px 0;",
+    
     tags$a(
-      href = "https://cgdev.shinyapps.io/msa-pullsizing-incentive-calc1/",
-      target = "_blank",
-      style = "color: #662260; font-weight: 600; text-decoration: none; font-size: 16px;",
-      "View the full size version →"
+      href = "#about_collapse",
+      `data-toggle` = "collapse",
+      role = "button",
+      style = "display: block; background: rgba(255, 255, 255, 0.95);
+           backdrop-filter: blur(20px); padding: 18px 22px;
+           border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+           color: #662260; font-weight: 800; font-size: 18px;
+           text-decoration: none;",
+      HTML("About This Calculator <span class='dropdown-arrow'>▾</span>")
     ),
-    tags$div(
-      tags$a(
-        href = "https://docs.google.com/forms/d/1GoN0U9lbSCET4P3WlMjookgf0hGzX6xROYBJv1am1dM/viewform?edit_requested=true",
-        target = "_blank",
-        style = "color: #662260; font-weight: 600; text-decoration: none; font-size: 14px;",
-        "Have feedback on how we can improve?  Provide it here →"
+    
+    div(
+      id = "about_collapse",
+      class = "collapse",   # use "collapse show" if you want it open by default
+      div(
+        style = "background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+               padding: 25px 30px; border-radius: 16px; margin-top: 10px;
+               box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);",
+        
+        p(
+          style = "font-size: 15px; line-height: 1.7; color: #2d3748; margin-bottom: 5px;",
+          "This calculator helps you apply the pull sizing framework above to determine how large your pull incentive needs to be. It calculates the needed size of different mechanisms, discounted to the present day:",
+          tags$ol(
+            style = "margin-left: 20px; ",
+            tags$li(tags$strong("Prizes:"), " Successful participants split a prize upon completion of all development stages"),
+            tags$li(tags$strong("Advanced Market Commitments (AMCs):"), " Participants receive a subsidy payment (top-up) per unit of the innovation sold over the subsidy period"),
+            tags$li(tags$strong("Milestones + AMCs:"), " Firms receive lump-sum payments upon completing specific development stages, followed by per-unit subsidies (top-ups) for commercialization")
+          ),
+          "The calculator allows you to model different scenarios including: multiple development stages with varying costs and success probabilities, different adoption and revenue curves, flexible AMC parameters (top-up amounts or no. of units to cover), revenue generation timing (which stage revenue begins), and milestone payment schedules."
+        ),
+        
+        tags$a(
+          href = "https://cgdev.shinyapps.io/msa-pullsizing-incentive-calc1/",
+          target = "_blank",
+          style = "color: #662260; font-weight: 600; text-decoration: none; font-size: 16px;",
+          "View the full size version →"
+        ),
+        
       )
     )
   ),
@@ -48,6 +55,7 @@ ui <- fluidPage(
   tags$head(tags$style(
     HTML(
       "
+
 
    @font-face {
     font-family: 'Proxima Nova';
@@ -800,6 +808,102 @@ ui <- fluidPage(
   .bottom-right-footer { display: none; }
 }
 
+  a[aria-expanded='true'] span {
+        transform: rotate(180deg);
+        display: inline-block;
+        transition: transform 0.2s ease;
+  }
+      
+a span.dropdown-arrow {
+  font-size: 30px;
+  font-weight: 800;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  opacity: 0.85;
+}
+
+/* ========== BOTTOM-RIGHT FOOTER TEXT STYLES ========== */
+.bottom-right-footer {
+  line-height: 1.4;
+}
+
+.footer-main {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.footer-feedback {
+  margin-top: 2px;
+}
+
+.footer-feedback a {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.footer-fullsize {
+  margin-top: 6px;
+}
+
+.footer-fullsize a {
+  font-size: 15px;
+  font-weight: 700;
+  color: #DE7C5A !important;  /* Brand orange */
+  text-decoration: none;
+}
+
+.footer-fullsize a:hover {
+  text-decoration: underline;
+}
+
+/* ========== FIXED FOOTERS ========== */
+
+/* Left footer: static attribution + links */
+.bottom-left-footer {
+  position: fixed;
+  left: 18px;
+  bottom: 14px;
+  z-index: 9999;
+
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'Proxima Nova', 'Inter', sans-serif;
+
+  color: #58595B;
+  background: transparent;
+}
+
+.bottom-left-footer a {
+  color: #DE7C5A !important;
+  text-decoration: none !important;
+}
+
+.bottom-left-footer a:hover {
+  text-decoration: underline !important;
+}
+
+/* Right footer: primary CTA */
+.bottom-right-footer {
+  position: fixed;
+  right: 18px;
+  bottom: 14px;
+  z-index: 9999;
+
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Proxima Nova', 'Inter', sans-serif;
+
+  background: transparent;
+}
+
+.bottom-right-footer a {
+  color: #DE7C5A !important;  /* Brand orange */
+  text-decoration: none !important;
+}
+
+.bottom-right-footer a:hover {
+  text-decoration: underline !important;
+}
 
 "
     )
@@ -1295,9 +1399,31 @@ ui <- fluidPage(
   ),
   
   tags$div(
+    class = "bottom-left-footer",
+    style = "color: #DE7C5A",
+    HTML(
+      "
+    Author: Georgia Bradley (2025). 
+    <a href='https://github.com/gbrad123/Incentive-Calculator' target='_blank'>
+      Git repository
+    </a>
+    &nbsp;|&nbsp;
+    <a href='https://docs.google.com/forms/d/1GoN0U9lbSCET4P3WlMjookgf0hGzX6xROYBJv1am1dM/viewform?edit_requested=true'
+       target='_blank'>
+      Feedback →
+    </a>
+    "
+    )
+  ),
+  
+  tags$div(
     class = "bottom-right-footer",
-    style = "color: black",
-    HTML('Author: Georgia Bradley (2025). <a href="https://github.com/gbrad123/Incentive-Calculator" target="_blank">Link to Git repository here</a>')
+    tags$a(
+      href = "https://cgdev.shinyapps.io/msa-pullsizing-incentive-calc1/",
+      target = "_blank",
+      "View full-size version →"
+    )
   )
+  
   
 )
